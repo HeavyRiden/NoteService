@@ -1,6 +1,6 @@
 data class Comment(
-    val noteId: Long, // Идентификатор заметки
-    val guId: Long, // Уникальный идентификатор комментария
+    val noteId: Int, // Идентификатор заметки
+    val guId: Int, // Уникальный идентификатор комментария
     val message: String // Текст комментария
 ) {
     var visible: Boolean = true // Видимость комментария и возможность редактирования
