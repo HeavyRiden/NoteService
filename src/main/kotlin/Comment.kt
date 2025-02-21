@@ -1,6 +1,11 @@
 data class Comment(
     val noteId: Long, // Идентификатор заметки
-    val message: String, // Текст комментария
     val guId: Long, // Уникальный идентификатор комментария
-    val visible: Boolean // Видимость комментария и возможность редактирования
-)
+    val message: String // Текст комментария
+) {
+    var visible: Boolean = true // Видимость комментария и возможность редактирования
+
+    override fun toString(): String {
+        return "Комментарий к заметке $noteId -  $message"
+    }
+}
