@@ -1,6 +1,6 @@
 class NoteService(
     private var listOfNotes: MutableList<Note> = mutableListOf(),
-    private var idNextNote: Long = 0
+    private var idNextNote: Long = 1
 
 ) : TextNotes<Note> {
     override fun add(entity: Note): Long {
@@ -11,21 +11,24 @@ class NoteService(
     }
 
     override fun delete(id: Long) {
-        if (listOfNotes.size >= id) listOfNotes.removeAt((id - 1).toInt())
-        else println("Такого индекса заметки нет!")
-        idNextNote -= 1
+        if (listOfNotes.size >= id) {
+            listOfNotes.removeAt((id - 1).toInt())
+            idNextNote -= 1
+        } else println("Такого индекса заметки нет!")
+
     }
 
     override fun edit(entity: Note) {
-        TODO("Not yet implemented")
+        if(listOfNotes.size > entity.id) listOfNotes[(entity.id - 1).toInt()] = entity
+        else println("Такого индекса заметки нет!")
     }
 
     override fun read(): List<Note> {
-        TODO("Not yet implemented")
+        return listOfNotes
     }
 
     override fun getById(id: Long): Note {
-        TODO("Not yet implemented")
+        return listOfNotes[(id - 1).toInt()]
     }
 
     override fun restore(id: Long) {
