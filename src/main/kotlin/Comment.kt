@@ -6,7 +6,7 @@ data class Comment(
     var visible: Boolean = true // Видимость комментария и возможность редактирования
 
     override fun toString(): String {
-        return if(visible) "Комментарий к заметке $noteId -  $message"
+        return if(visible) message
         else ""
     }
 }

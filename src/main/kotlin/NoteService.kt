@@ -38,9 +38,18 @@ class NoteService(
         } else println("Такого индекса заметки нет!")
     }
 
-    fun editNote(entity: Note) {
-        if (listOfNotes.size > entity.id) listOfNotes[entity.id - 1] = entity
+    fun editNote(noteId: Int, entity: Note) {
+        if (listOfNotes.size >= noteId) listOfNotes[entity.id - 1] = entity
         else println("Такого индекса заметки нет!")
+    }
+
+    fun editComment(noteId: Int, comId: Int, comment: Comment) {
+        if (listOfNotes.size >= noteId) {
+            if (listOfNotes[noteId].listOfComments.size >= comId % 10 - 1 &&
+                listOfNotes[noteId].listOfComments[comId % 10 - 1].visible) {
+                listOfNotes[noteId].listOfComments[comId % 10 - 1] = comment
+            } else println("Такого индекса комментария нет")
+        } else println("Такого индекса заметки нет!")
     }
 
     fun readNote(): List<Note> {
@@ -52,14 +61,6 @@ class NoteService(
     }
 
     fun restoreComment(noteId: Int, comId: Int) {
-        if (listOfNotes.size >= noteId) {
-            if (listOfNotes[noteId].listOfComments.size >= comId % 10 - 1) {
-                listOfNotes[noteId].listOfComments[comId % 10 - 1].visible = true
-            } else println("Такого индекса комментария нет")
-        } else println("Такого индекса заметки нет!")
-    }
-
-    fun editComment(noteId: Int, comId: Int) {
         if (listOfNotes.size >= noteId) {
             if (listOfNotes[noteId].listOfComments.size >= comId % 10 - 1) {
                 listOfNotes[noteId].listOfComments[comId % 10 - 1].visible = true
