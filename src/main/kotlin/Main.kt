@@ -7,9 +7,12 @@ fun main() {
     val comm2 = Comment(1, 2, "Комментарий2")
 
     val serv = NoteService()
-    serv.add(note2)
-    serv.add(note)
-    //serv.edit(note3)
-    serv.createComment(1, comm1)
-    println(serv.read())
+    serv.addNote(note2)
+    serv.addNote(note)
+    serv.addComment(1, comm1)
+    serv.addComment(1, comm2)
+    serv.deleteComment(1, 11)
+    println(serv.readNote())
+    serv.restoreComment(1, 11)
+    println(serv.readNote())
 }
