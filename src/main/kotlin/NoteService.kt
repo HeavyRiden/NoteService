@@ -1,15 +1,13 @@
 class NoteService(
     private var listOfNotes: MutableList<Note> = mutableListOf(),
-    private var idNextNote: Int = 1,
     private var idComment: Int = 1
 
 ) {
     fun addNote(entity: Note): Int {
         listOfNotes += entity
-        entity.id = idNextNote
-        idComment = idNextNote * 10 + 1
-        idNextNote += 1
-        return idNextNote
+        entity.id = listOfNotes.size
+        idComment = listOfNotes.size * 10 + 1
+        return listOfNotes.size
     }
 
     fun addComment(noteId: Int, comment: Comment) {
@@ -25,7 +23,6 @@ class NoteService(
     fun deleteNote(idNote: Int) {
         if (listOfNotes.size >= idNote) {
             listOfNotes.removeAt(idNote - 1)
-            idNextNote -= 1
         } else println("Такого индекса заметки нет!")
 
     }
