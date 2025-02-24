@@ -1,76 +1,118 @@
 class NoteService(
     private var listOfNotes: MutableList<Note> = mutableListOf(),
-    private var idComment: Int = 1
+    private var idNote: Int = 1,
 
-) {
+    ) {
     fun addNote(entity: Note): Int {
         listOfNotes += entity
-        entity.id = listOfNotes.size
-        idComment = listOfNotes.size * 10 + 1
-        return listOfNotes.size
+        entity.id = idNote
+        idNote += 1
+        return idNote
     }
 
-    fun addComment(noteId: Int, comment: Comment) {
-        if (listOfNotes.size >= noteId) {
-            comment.commId = idComment
-            idComment += 1
-            listOfNotes[noteId - 1].listOfComments += comment
-        } else {
-            println("Заметки с таким индексом нет!")
+    fun addComment(noteId: Int, comment: Comment): Boolean {
+        for (i in listOfNotes.indices) {
+            if (listOfNotes[i].id == noteId) {
+                listOfNotes[i].listOfComments += comment
+                comment.commId = listOfNotes[i].id * 10 + listOfNotes[i].listOfComments.size
+                return true
+            }
         }
+        println("Заметки с таким индексом нет!")
+        return false
     }
 
-    fun deleteNote(idNote: Int) {
-        if (listOfNotes.size >= idNote) {
-            listOfNotes.removeAt(idNote - 1)
-        } else println("Такого индекса заметки нет!")
-
+    fun deleteNote(idNote: Int): Boolean {
+        for (i in listOfNotes.indices) {
+            if (listOfNotes[i].id == idNote) {
+                listOfNotes.removeAt(i)
+                return true
+            }
+        }
+        println("Такого индекса заметки нет!")
+        return false
     }
 
-    fun deleteComment(noteId: Int, comId: Int) {
-        if (listOfNotes.size >= noteId) {
-            if (listOfNotes[noteId - 1].listOfComments.size >= comId % 10 - 1 &&
-                listOfNotes[noteId - 1].listOfComments[comId % 10 - 1].visible
-            ) {
-                listOfNotes[noteId - 1].listOfComments[comId % 10 - 1].visible = false
-            } else println("Такого индекса комментария нет")
-        } else println("Такого индекса заметки нет!")
+    fun deleteComment(noteId: Int, comId: Int): Boolean {
+        for (i in listOfNotes.indices) {
+            if (listOfNotes[i].id == noteId) {
+                for (k in listOfNotes[i].listOfComments.indices) {
+                    if (listOfNotes[i].listOfComments[k].commId == comId) {
+                        listOfNotes[i].listOfComments[k].visible = false
+                        return true
+                    }
+                }
+            }
+        }
+        println("Такого индекса заметки нет!")
+        return false
     }
 
-    fun editNote(noteId: Int, entity: Note) {
-        if (listOfNotes.size >= noteId) listOfNotes[entity.id - 1] = entity
-        else println("Такого индекса заметки нет!")
+    fun editNote(noteId: Int, entity: Note): Boolean {
+        for (i in listOfNotes.indices) {
+            if (listOfNotes[i].id == noteId) {
+                listOfNotes[i] = entity
+                return true
+            }
+        }
+        println("Такого индекса заметки нет!")
+        return false
     }
 
-    fun editComment(noteId: Int, comId: Int, comment: Comment) {
-        if (listOfNotes.size >= noteId) {
-            if (listOfNotes[noteId - 1].listOfComments.size >= comId % 10 - 1 &&
-                listOfNotes[noteId - 1].listOfComments[comId % 10 - 1].visible
-            ) {
-                listOfNotes[noteId - 1].listOfComments[comId % 10 - 1] = comment
-            } else println("Такого индекса комментария нет")
-        } else println("Такого индекса заметки нет!")
+    fun editComment(noteId: Int, comId: Int, comment: Comment): Boolean {
+        for (i in listOfNotes.indices) {
+            if (listOfNotes[i].id == noteId) {
+                for (k in listOfNotes[i].listOfComments.indices) {
+                    if (listOfNotes[i].listOfComments[k].commId == comId &&
+                        listOfNotes[i].listOfComments[k].visible
+                    ) {
+                        listOfNotes[i].listOfComments[k].message = comment.message
+                        return true
+                    }
+                }
+            }
+        }
+        println("Такого индекса заметки нет!")
+        return false
     }
 
     fun readNote() {
         println(listOfNotes)
     }
 
-    fun readComment(noteId: Int) {
-        if (listOfNotes.size >= noteId) {
-            println(listOfNotes[noteId - 1].listOfComments)
-        } else println("Такого индекса заметки нет!")
+    fun readComment(noteId: Int): Boolean {
+        for (i in listOfNotes.indices) {
+            if (listOfNotes[i].id == noteId) {
+                println(listOfNotes[i].listOfComments)
+                return true
+            }
+        }
+        println("Такого индекса заметки нет!")
+        return false
     }
 
-    fun getByIdNote(noteId: Int) {
-        if (listOfNotes.size >= noteId) println(listOfNotes[noteId - 1])
+    fun getByIdNote(noteId: Int): Boolean {
+        for (i in listOfNotes.indices) {
+            if (listOfNotes[i].id == noteId) {
+                println(listOfNotes[i])
+                return true
+            }
+        }
+        return false
     }
 
-    fun restoreComment(noteId: Int, comId: Int) {
-        if (listOfNotes.size >= noteId) {
-            if (listOfNotes[noteId - 1].listOfComments.size >= comId % 10 - 1) {
-                listOfNotes[noteId - 1].listOfComments[comId % 10 - 1].visible = true
-            } else println("Такого индекса комментария нет")
-        } else println("Такого индекса заметки нет!")
+    fun restoreComment(noteId: Int, comId: Int): Boolean {
+        for (i in listOfNotes.indices) {
+            if (listOfNotes[i].id == noteId) {
+                for (k in listOfNotes[i].listOfComments.indices) {
+                    if (listOfNotes[i].listOfComments[k].commId == comId) {
+                        listOfNotes[i].listOfComments[k].visible = true
+                        return true
+                    }
+                }
+            }
+        }
+        println("Такого индекса заметки нет!")
+        return false
     }
 }
