@@ -18,7 +18,7 @@ class NoteService(
                 return true
             }
         }
-        println("Заметки с таким индексом нет!")
+        println("Неверный ввод параметров")
         return false
     }
 
@@ -29,7 +29,7 @@ class NoteService(
                 return true
             }
         }
-        println("Такого индекса заметки нет!")
+        println("Неверный ввод параметров")
         return false
     }
 
@@ -44,7 +44,7 @@ class NoteService(
                 }
             }
         }
-        println("Такого индекса заметки нет!")
+        println("Неверный ввод параметров")
         return false
     }
 
@@ -55,7 +55,7 @@ class NoteService(
                 return true
             }
         }
-        println("Такого индекса заметки нет!")
+        println("Неверный ввод параметров")
         return false
     }
 
@@ -72,7 +72,7 @@ class NoteService(
                 }
             }
         }
-        println("Такого индекса заметки нет!")
+        println("Неверный ввод параметров")
         return false
     }
 
@@ -87,7 +87,7 @@ class NoteService(
                 return true
             }
         }
-        println("Такого индекса заметки нет!")
+        println("Неверный ввод параметров")
         return false
     }
 
@@ -112,7 +112,7 @@ class NoteService(
                 }
             }
         }
-        println("Такого индекса заметки нет!")
+        println("Неверный ввод параметров")
         return false
     }
 }
